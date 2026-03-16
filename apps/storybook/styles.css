@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@import '@kubedash/design-tokens/index.css';
+
+:root {
+  font-family: var(--font-ui);
+  color: var(--text-primary);
+  background-color: var(--surface-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+}

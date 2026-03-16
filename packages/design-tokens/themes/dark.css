@@ -1,0 +1,7 @@
+/* Dark theme is the default — no overrides needed.
+ * Semantic tokens in colors.css default to dark theme via :root.
+ * This file exists for explicit theme selection if needed.
+ */
+[data-theme="dark"] {
+  color-scheme: dark;
+}

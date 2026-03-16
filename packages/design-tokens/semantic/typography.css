@@ -1,0 +1,46 @@
+/* KubeDash Semantic Tokens: Typography */
+
+:root {
+  /* Heading presets */
+  --heading-1-size: var(--text-3xl);
+  --heading-1-weight: var(--weight-bold);
+  --heading-1-leading: var(--leading-3xl);
+
+  --heading-2-size: var(--text-2xl);
+  --heading-2-weight: var(--weight-semibold);
+  --heading-2-leading: var(--leading-2xl);
+
+  --heading-3-size: var(--text-xl);
+  --heading-3-weight: var(--weight-semibold);
+  --heading-3-leading: var(--leading-xl);
+
+  --heading-4-size: var(--text-lg);
+  --heading-4-weight: var(--weight-medium);
+  --heading-4-leading: var(--leading-lg);
+
+  /* Body presets */
+  --body-size: var(--text-base);
+  --body-weight: var(--weight-regular);
+  --body-leading: var(--leading-base);
+
+  --body-sm-size: var(--text-sm);
+  --body-sm-weight: var(--weight-regular);
+  --body-sm-leading: var(--leading-sm);
+
+  /* Data display presets */
+  --metric-value-size: var(--text-2xl);
+  --metric-value-weight: var(--weight-bold);
+
+  --table-cell-size: var(--text-table);
+  --table-cell-weight: var(--weight-regular);
+  --table-cell-leading: var(--leading-table);
+
+  --caption-size: var(--text-caption);
+  --caption-weight: var(--weight-regular);
+  --caption-leading: var(--leading-caption);
+
+  /* Code presets */
+  --code-size: var(--text-sm);
+  --code-weight: var(--weight-regular);
+  --code-family: var(--font-mono);
+}

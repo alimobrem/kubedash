@@ -1,0 +1,159 @@
+/* KubeDash Semantic Tokens: Colors
+ * Dark-first (K8s dashboards used in dark mode 90%+ of the time)
+ * 6-level elevation, alpha tokens, glow system
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK THEME (DEFAULT)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Surfaces (6-level elevation) ── */
+  --surface-base: var(--color-gray-950);
+  --surface-raised: var(--color-gray-900);
+  --surface-overlay: var(--color-gray-850);
+  --surface-floating: var(--color-gray-800);
+  --surface-modal: var(--color-gray-750);
+  --surface-tooltip: var(--color-gray-700);
+
+  /* ── Shadows per elevation ── */
+  --shadow-raised: 0 1px 3px oklch(0 0 0 / 0.4);
+  --shadow-overlay: 0 4px 12px oklch(0 0 0 / 0.5);
+  --shadow-floating: 0 8px 24px oklch(0 0 0 / 0.5);
+  --shadow-modal: 0 16px 48px oklch(0 0 0 / 0.6);
+  --shadow-tooltip: 0 4px 8px oklch(0 0 0 / 0.6);
+
+  /* ── Text ── */
+  --text-primary: oklch(0.93 0 0);
+  --text-secondary: oklch(0.65 0 0);
+  --text-muted: oklch(0.45 0 0);
+  --text-disabled: oklch(0.35 0 0);
+  --text-inverse: var(--color-gray-950);
+  --text-link: var(--color-blue-400);
+  --text-link-hover: var(--color-blue-300);
+
+  /* ── Borders ── */
+  --border-default: oklch(0.30 0 0);
+  --border-strong: oklch(0.40 0 0);
+  --border-focus: var(--color-blue-400);
+  --border-selected: var(--color-blue-500);
+
+  /* ── Alpha / Opacity tokens ── */
+  --alpha-subtle: 0.08;
+  --alpha-muted: 0.12;
+  --alpha-medium: 0.32;
+  --alpha-strong: 0.64;
+  --alpha-full: 1.0;
+
+  /* ── K8s Status Colors ── */
+  --status-running: var(--color-green-400);
+  --status-running-bg: oklch(0.723 0.219 150 / var(--alpha-subtle));
+  --status-pending: var(--color-amber-400);
+  --status-pending-bg: oklch(0.828 0.189 70 / var(--alpha-subtle));
+  --status-failed: var(--color-red-400);
+  --status-failed-bg: oklch(0.704 0.191 25 / var(--alpha-subtle));
+  --status-creating: var(--color-blue-400);
+  --status-creating-bg: oklch(0.707 0.165 266 / var(--alpha-subtle));
+  --status-terminating: oklch(0.700 0.180 55);
+  --status-terminating-bg: oklch(0.700 0.180 55 / var(--alpha-subtle));
+  --status-unknown: var(--color-gray-400);
+  --status-unknown-bg: oklch(0.708 0 0 / var(--alpha-subtle));
+
+  /* ── Resource Metric Colors ── */
+  --metric-cpu: var(--color-blue-400);
+  --metric-memory: oklch(0.700 0.200 30);
+  --metric-storage: var(--color-purple-400);
+  --metric-network: var(--color-teal-400);
+
+  /* ── Glow System (makes dark UI feel alive) ── */
+  --glow-success: oklch(0.723 0.219 150 / 0.4);
+  --glow-danger: oklch(0.704 0.191 25 / 0.4);
+  --glow-warning: oklch(0.828 0.189 70 / 0.4);
+  --glow-info: oklch(0.707 0.165 266 / 0.4);
+
+  /* ── Scorecard ── */
+  --scorecard-pass: var(--color-green-400);
+  --scorecard-warn: var(--color-amber-400);
+  --scorecard-fail: var(--color-red-400);
+
+  /* ── Interactive ── */
+  --interactive-primary: var(--color-blue-500);
+  --interactive-primary-hover: var(--color-blue-400);
+  --interactive-danger: var(--color-red-500);
+  --interactive-danger-hover: var(--color-red-400);
+
+  /* ── Chart Palette (12 colors + muted + fill) ── */
+  --chart-1: var(--color-blue-400);
+  --chart-2: oklch(0.700 0.200 30);
+  --chart-3: var(--color-green-400);
+  --chart-4: var(--color-purple-400);
+  --chart-5: var(--color-teal-400);
+  --chart-6: var(--color-amber-400);
+  --chart-7: var(--color-red-400);
+  --chart-8: oklch(0.650 0.180 330);
+  --chart-9: oklch(0.680 0.140 200);
+  --chart-10: oklch(0.720 0.160 120);
+  --chart-11: oklch(0.600 0.190 280);
+  --chart-12: oklch(0.750 0.130 50);
+
+  /* ── Density ── */
+  --density-factor: 1;
+}
+
+/* Compact density mode */
+[data-density="compact"] {
+  --density-factor: 0.75;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME
+   ═══════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* ── Surfaces ── */
+  --surface-base: var(--color-gray-50);
+  --surface-raised: var(--color-gray-0);
+  --surface-overlay: var(--color-gray-0);
+  --surface-floating: var(--color-gray-0);
+  --surface-modal: var(--color-gray-0);
+  --surface-tooltip: var(--color-gray-800);
+
+  /* ── Shadows (more visible in light mode) ── */
+  --shadow-raised: 0 1px 3px oklch(0 0 0 / 0.1), 0 1px 2px oklch(0 0 0 / 0.06);
+  --shadow-overlay: 0 4px 12px oklch(0 0 0 / 0.12);
+  --shadow-floating: 0 8px 24px oklch(0 0 0 / 0.15);
+  --shadow-modal: 0 16px 48px oklch(0 0 0 / 0.2);
+  --shadow-tooltip: 0 4px 8px oklch(0 0 0 / 0.15);
+
+  /* ── Text ── */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-500);
+  --text-muted: var(--color-gray-400);
+  --text-disabled: var(--color-gray-300);
+  --text-inverse: var(--color-gray-0);
+  --text-link: var(--color-blue-600);
+  --text-link-hover: var(--color-blue-700);
+
+  /* ── Borders ── */
+  --border-default: var(--color-gray-200);
+  --border-strong: var(--color-gray-300);
+
+  /* ── Status (adjusted lightness for light backgrounds) ── */
+  --status-running: var(--color-green-600);
+  --status-running-bg: oklch(0.627 0.194 150 / var(--alpha-subtle));
+  --status-pending: var(--color-amber-600);
+  --status-pending-bg: oklch(0.666 0.179 70 / var(--alpha-subtle));
+  --status-failed: var(--color-red-600);
+  --status-failed-bg: oklch(0.577 0.245 25 / var(--alpha-subtle));
+  --status-creating: var(--color-blue-600);
+  --status-creating-bg: oklch(0.546 0.245 266 / var(--alpha-subtle));
+  --status-unknown: var(--color-gray-500);
+  --status-unknown-bg: oklch(0.551 0 0 / var(--alpha-subtle));
+
+  /* ── Glow (dimmer in light mode) ── */
+  --glow-success: oklch(0.627 0.194 150 / 0.2);
+  --glow-danger: oklch(0.577 0.245 25 / 0.2);
+  --glow-warning: oklch(0.666 0.179 70 / 0.2);
+  --glow-info: oklch(0.546 0.245 266 / 0.2);
+
+  /* ── Tooltip text (light on dark) ── */
+  --text-tooltip: oklch(0.93 0 0);
+}

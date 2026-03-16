@@ -1,0 +1,7 @@
+/* Light theme overrides are defined in semantic/colors.css
+ * via [data-theme="light"] selector.
+ * This file exists for explicit import if needed.
+ */
+[data-theme="light"] {
+  color-scheme: light;
+}

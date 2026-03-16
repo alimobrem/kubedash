@@ -1,0 +1,7 @@
+/* KubeDash Design Tokens — Main Entry Point
+ * Import this once at the app root
+ */
+@import './primitives/index.css';
+@import './semantic/index.css';
+@import './themes/dark.css';
+@import './themes/light.css';
