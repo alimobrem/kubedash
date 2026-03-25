@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { StatusBadge } from '@kubedash/ui';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof StatusBadge> = {
   title: 'Primitives/StatusBadge',

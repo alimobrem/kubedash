@@ -61,9 +61,7 @@ export function ScaleDialog({
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-[var(--text-secondary)]">Replicas</span>
-              <span className="text-xs text-[var(--text-muted)]">
-                Current: {currentReplicas}
-              </span>
+              <span className="text-xs text-[var(--text-muted)]">Current: {currentReplicas}</span>
             </div>
 
             <div className="flex items-center gap-3">

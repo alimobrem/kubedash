@@ -19,10 +19,38 @@ interface RollbackDialogProps {
 }
 
 const mockRevisions: Revision[] = [
-  { number: 5, image: 'payment-api:v2.14.3', timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), author: 'alice@acme.com', commitSha: 'a3f8c21', current: true },
-  { number: 4, image: 'payment-api:v2.14.2', timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), author: 'bob@acme.com', commitSha: 'e7d2b15', current: false },
-  { number: 3, image: 'payment-api:v2.14.1', timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), author: 'alice@acme.com', commitSha: 'c1f9a08', current: false },
-  { number: 2, image: 'payment-api:v2.13.0', timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), author: 'charlie@acme.com', commitSha: '9b4e3d7', current: false },
+  {
+    number: 5,
+    image: 'payment-api:v2.14.3',
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    author: 'alice@acme.com',
+    commitSha: 'a3f8c21',
+    current: true,
+  },
+  {
+    number: 4,
+    image: 'payment-api:v2.14.2',
+    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    author: 'bob@acme.com',
+    commitSha: 'e7d2b15',
+    current: false,
+  },
+  {
+    number: 3,
+    image: 'payment-api:v2.14.1',
+    timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    author: 'alice@acme.com',
+    commitSha: 'c1f9a08',
+    current: false,
+  },
+  {
+    number: 2,
+    image: 'payment-api:v2.13.0',
+    timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    author: 'charlie@acme.com',
+    commitSha: '9b4e3d7',
+    current: false,
+  },
 ];
 
 export function RollbackDialog({ open, onClose, serviceName }: RollbackDialogProps) {
@@ -102,9 +130,13 @@ export function RollbackDialog({ open, onClose, serviceName }: RollbackDialogPro
                     <span className="text-xs font-semibold text-[var(--text-primary)]">
                       Rev {rev.number}
                     </span>
-                    <span className="font-mono text-xs text-[var(--text-secondary)]">{rev.image}</span>
+                    <span className="font-mono text-xs text-[var(--text-secondary)]">
+                      {rev.image}
+                    </span>
                     {rev.current && (
-                      <StatusBadge status="running" size="sm">Current</StatusBadge>
+                      <StatusBadge status="running" size="sm">
+                        Current
+                      </StatusBadge>
                     )}
                   </div>
                   <div className="flex items-center gap-2 mt-1 text-[0.625rem] text-[var(--text-muted)]">

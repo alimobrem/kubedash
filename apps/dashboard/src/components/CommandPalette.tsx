@@ -1,4 +1,11 @@
-import { KBD, ResourceIcon, StatusBadge, cn, type K8sResourceKind, type K8sStatus } from '@kubedash/ui';
+import {
+  cn,
+  type K8sResourceKind,
+  type K8sStatus,
+  KBD,
+  ResourceIcon,
+  StatusBadge,
+} from '@kubedash/ui';
 import { Command } from 'cmdk';
 import {
   ArrowRight,
@@ -8,10 +15,12 @@ import {
   Scaling,
   Search,
   Server,
+  Sparkles,
   Terminal,
   Zap,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { usePulseStore } from '../stores/pulse';
 
 interface SearchResult {
   id: string;
@@ -38,28 +47,157 @@ interface NavItem {
 
 // Mock search results
 const mockResources: SearchResult[] = [
-  { id: '1', kind: 'deployment', name: 'payment-api', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '2', kind: 'deployment', name: 'payment-worker', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '3', kind: 'service', name: 'payment-api', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '4', kind: 'pod', name: 'payment-api-7f8b9c', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '5', kind: 'pod', name: 'payment-api-a3d4e1', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '6', kind: 'pod', name: 'payment-worker-x2k9p', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '7', kind: 'deployment', name: 'checkout-svc', namespace: 'payments', cluster: 'prod-us-east-1', status: 'failed' },
-  { id: '8', kind: 'pod', name: 'checkout-svc-7f8b9c', namespace: 'payments', cluster: 'prod-us-east-1', status: 'failed' },
-  { id: '9', kind: 'node', name: 'ip-10-0-42-17', namespace: '', cluster: 'prod-us-east-1', status: 'failed' },
-  { id: '10', kind: 'ingress', name: 'payment-api', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '11', kind: 'configmap', name: 'payment-api-config', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '12', kind: 'secret', name: 'payment-api-secrets', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '13', kind: 'deployment', name: 'user-service', namespace: 'identity', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '14', kind: 'deployment', name: 'order-processor', namespace: 'payments', cluster: 'prod-us-east-1', status: 'running' },
-  { id: '15', kind: 'pvc', name: 'data-redis-0', namespace: 'cache', cluster: 'prod-us-east-1', status: 'pending' },
+  {
+    id: '1',
+    kind: 'deployment',
+    name: 'payment-api',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '2',
+    kind: 'deployment',
+    name: 'payment-worker',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '3',
+    kind: 'service',
+    name: 'payment-api',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '4',
+    kind: 'pod',
+    name: 'payment-api-7f8b9c',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '5',
+    kind: 'pod',
+    name: 'payment-api-a3d4e1',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '6',
+    kind: 'pod',
+    name: 'payment-worker-x2k9p',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '7',
+    kind: 'deployment',
+    name: 'checkout-svc',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'failed',
+  },
+  {
+    id: '8',
+    kind: 'pod',
+    name: 'checkout-svc-7f8b9c',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'failed',
+  },
+  {
+    id: '9',
+    kind: 'node',
+    name: 'ip-10-0-42-17',
+    namespace: '',
+    cluster: 'prod-us-east-1',
+    status: 'failed',
+  },
+  {
+    id: '10',
+    kind: 'ingress',
+    name: 'payment-api',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '11',
+    kind: 'configmap',
+    name: 'payment-api-config',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '12',
+    kind: 'secret',
+    name: 'payment-api-secrets',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '13',
+    kind: 'deployment',
+    name: 'user-service',
+    namespace: 'identity',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '14',
+    kind: 'deployment',
+    name: 'order-processor',
+    namespace: 'payments',
+    cluster: 'prod-us-east-1',
+    status: 'running',
+  },
+  {
+    id: '15',
+    kind: 'pvc',
+    name: 'data-redis-0',
+    namespace: 'cache',
+    cluster: 'prod-us-east-1',
+    status: 'pending',
+  },
 ];
 
 const actions: ActionItem[] = [
-  { id: 'scale', label: 'Scale deployment...', icon: <Scaling size={16} />, shortcut: 'S', onSelect: () => {} },
-  { id: 'rollback', label: 'Rollback deployment...', icon: <RotateCcw size={16} />, shortcut: 'R', onSelect: () => {} },
-  { id: 'logs', label: 'View logs...', icon: <FileText size={16} />, shortcut: 'L', onSelect: () => {} },
-  { id: 'exec', label: 'Exec into pod...', icon: <Terminal size={16} />, shortcut: 'E', onSelect: () => {} },
+  {
+    id: 'scale',
+    label: 'Scale deployment...',
+    icon: <Scaling size={16} />,
+    shortcut: 'S',
+    onSelect: () => {},
+  },
+  {
+    id: 'rollback',
+    label: 'Rollback deployment...',
+    icon: <RotateCcw size={16} />,
+    shortcut: 'R',
+    onSelect: () => {},
+  },
+  {
+    id: 'logs',
+    label: 'View logs...',
+    icon: <FileText size={16} />,
+    shortcut: 'L',
+    onSelect: () => {},
+  },
+  {
+    id: 'exec',
+    label: 'Exec into pod...',
+    icon: <Terminal size={16} />,
+    shortcut: 'E',
+    onSelect: () => {},
+  },
 ];
 
 const navItems: NavItem[] = [
@@ -86,15 +224,57 @@ const kindLabel: Record<K8sResourceKind, string> = {
   daemonset: 'DaemonSet',
 };
 
+const NL_PREFIXES = [
+  'why',
+  'what',
+  'how',
+  'show',
+  'which',
+  'who',
+  'when',
+  'where',
+  'is',
+  'are',
+  'can',
+  'do',
+  'does',
+  'compare',
+  'summarize',
+  'explain',
+  'list',
+  'find',
+];
+
+function isNaturalLanguage(input: string): boolean {
+  if (!input.trim()) return false;
+  if (input.includes('?')) return true;
+  const firstWord = input.trim().split(/\s+/)[0].toLowerCase();
+  return NL_PREFIXES.includes(firstWord);
+}
+
+function getSuggestedQueries(): string[] {
+  const path = window.location.pathname;
+  if (path === '/triage')
+    return ['What caused the current incidents?', 'Suggest remediation steps'];
+  if (path === '/nodes') return ['Which nodes are under pressure?', 'Predict capacity needs'];
+  if (path === '/cost') return ['Why did costs increase?', 'Show right-sizing opportunities'];
+  return ['Summarize health of my services', 'Which service costs the most?'];
+}
+
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const { sendMessage } = usePulseStore();
 
   // Cmd+K to open
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setOpen((prev) => !prev);
+        setOpen((prev) => {
+          if (prev) setSearch('');
+          return !prev;
+        });
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -129,7 +309,7 @@ export function CommandPalette() {
     <div className="fixed inset-0 z-[var(--z-command-palette)]">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70"
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
@@ -147,7 +327,9 @@ export function CommandPalette() {
           <div className="flex items-center gap-2 px-4 border-b border-[var(--border-default)]">
             <Search size={16} className="text-[var(--text-muted)] flex-shrink-0" />
             <Command.Input
-              placeholder="Search resources, actions, navigation..."
+              placeholder="Search resources, actions, or ask Pulse a question..."
+              value={search}
+              onValueChange={setSearch}
               className="flex-1 py-3 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none"
               autoFocus
             />
@@ -175,7 +357,11 @@ export function CommandPalette() {
                   onSelect={() => handleSelect(r.id)}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer data-[selected=true]:bg-[var(--surface-overlay)] transition-colors"
                 >
-                  <ResourceIcon kind={r.kind} size={16} className="text-[var(--text-secondary)] flex-shrink-0" />
+                  <ResourceIcon
+                    kind={r.kind}
+                    size={16}
+                    className="text-[var(--text-secondary)] flex-shrink-0"
+                  />
                   <span className="text-[0.625rem] text-[var(--text-muted)] w-16 flex-shrink-0">
                     {kindLabel[r.kind]}
                   </span>
@@ -232,6 +418,60 @@ export function CommandPalette() {
                 </Command.Item>
               ))}
             </Command.Group>
+
+            {/* Pulse Suggestions (shown when input is empty) */}
+            {!search.trim() && (
+              <Command.Group
+                heading={
+                  <span className="text-xs font-semibold text-[var(--pulse-accent)] uppercase tracking-wider px-2 mt-2 flex items-center gap-1">
+                    <Sparkles size={10} /> Pulse Suggestions
+                  </span>
+                }
+              >
+                {getSuggestedQueries().map((query) => (
+                  <Command.Item
+                    key={query}
+                    value={`pulse ${query}`}
+                    onSelect={() => {
+                      sendMessage(query);
+                      setOpen(false);
+                      setSearch('');
+                    }}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer data-[selected=true]:bg-[var(--pulse-accent-bg)] transition-colors"
+                  >
+                    <Sparkles size={14} className="text-[var(--pulse-accent)]" />
+                    <span className="text-[var(--text-primary)]">{query}</span>
+                  </Command.Item>
+                ))}
+              </Command.Group>
+            )}
+
+            {/* Ask Pulse (shown when input looks like natural language) */}
+            {search.trim() && isNaturalLanguage(search) && (
+              <Command.Group
+                heading={
+                  <span className="text-xs font-semibold text-[var(--pulse-accent)] uppercase tracking-wider px-2 mt-2 flex items-center gap-1">
+                    <Sparkles size={10} /> Ask Pulse
+                  </span>
+                }
+              >
+                <Command.Item
+                  value={`ask-pulse ${search}`}
+                  onSelect={() => {
+                    sendMessage(search.trim());
+                    setOpen(false);
+                    setSearch('');
+                  }}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer data-[selected=true]:bg-[var(--pulse-accent-bg)] transition-colors"
+                >
+                  <Sparkles size={14} className="text-[var(--pulse-accent)]" />
+                  <span className="text-[var(--text-primary)] flex-1 truncate">
+                    "{search.trim()}"
+                  </span>
+                  <span className="text-xs text-[var(--pulse-accent)]">Ask Pulse</span>
+                </Command.Item>
+              </Command.Group>
+            )}
           </Command.List>
 
           {/* Footer */}
@@ -244,6 +484,9 @@ export function CommandPalette() {
             </span>
             <span className="flex items-center gap-1">
               <KBD>esc</KBD> close
+            </span>
+            <span className="flex items-center gap-1 ml-auto text-[var(--pulse-accent)]">
+              <Sparkles size={8} /> Ask a question to use Pulse AI
             </span>
           </div>
         </Command>

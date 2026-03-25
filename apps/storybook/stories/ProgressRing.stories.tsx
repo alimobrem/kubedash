@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ProgressRing } from '@kubedash/ui';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ProgressRing> = {
   title: 'Primitives/ProgressRing',

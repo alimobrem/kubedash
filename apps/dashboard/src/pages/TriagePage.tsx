@@ -1,6 +1,9 @@
 import { cn, RelativeTime, StatusBadge } from '@kubedash/ui';
 import { AlertTriangle, BookOpen, Clock, VolumeX, Zap } from 'lucide-react';
+import { PulseInsightCard } from '../components/PulseInsightCard';
+import { PulseText } from '../components/PulseText';
 import { mockTimeline, mockTriageItems } from '../mock-data';
+import { generateTriageSummary } from '../utils/pulse-templates';
 
 const severityStyles = {
   critical: {
@@ -65,6 +68,24 @@ export function TriagePage() {
         </div>
       </div>
 
+      {/* Pulse Triage Summary */}
+      <div className="mb-6">
+        <PulseInsightCard
+          id="triage-summary"
+          severity="critical"
+          actions={[
+            { label: 'Cordon node', type: 'execute', payload: 'Cordon node ip-10-0-42-17' },
+            {
+              label: 'Rollback checkout-svc',
+              type: 'execute',
+              payload: 'Rollback checkout-svc to v2.14.2',
+            },
+          ]}
+        >
+          <PulseText text={generateTriageSummary()} />
+        </PulseInsightCard>
+      </div>
+
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Left column: Unhealthy Resources */}
         <div className="xl:col-span-2 space-y-6">
@@ -119,7 +140,8 @@ export function TriagePage() {
           <section>
             <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
               <Clock size={14} />
-              What Changed? <span className="text-[var(--text-muted)] font-normal">(last 30 minutes)</span>
+              What Changed?{' '}
+              <span className="text-[var(--text-muted)] font-normal">(last 30 minutes)</span>
             </h2>
             <div className="rounded-lg border border-[var(--border-default)] bg-[var(--surface-raised)] divide-y divide-[var(--border-default)]">
               {timeline.map((event, i) => (
@@ -163,7 +185,13 @@ export function TriagePage() {
                   </button>
                 </div>
                 <div className="text-[0.625rem] text-[var(--text-secondary)]">
-                  firing 8m · <a href="#" className="text-[var(--text-link)] hover:underline flex-inline items-center gap-0.5"><BookOpen size={10} className="inline" /> runbook</a>
+                  firing 8m ·{' '}
+                  <a
+                    href="#"
+                    className="text-[var(--text-link)] hover:underline flex-inline items-center gap-0.5"
+                  >
+                    <BookOpen size={10} className="inline" /> runbook
+                  </a>
                 </div>
               </div>
               <div className="rounded-lg border border-[var(--status-pending)]/20 bg-[var(--status-pending-bg)] p-3">
@@ -187,7 +215,9 @@ export function TriagePage() {
 
           {/* Resource Pressure */}
           <section>
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Resource Pressure</h2>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+              Resource Pressure
+            </h2>
             <div className="space-y-2">
               {[
                 { node: 'ip-10-0-42-17', metric: 'CPU', value: 94, status: 'failed' as const },
@@ -201,11 +231,7 @@ export function TriagePage() {
                   <span className="text-xs font-mono text-[var(--text-primary)]">{item.node}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-[0.625rem] text-[var(--text-muted)]">{item.metric}:</span>
-                    <StatusBadge
-                      status={item.status}
-                      size="sm"
-                      showShape={false}
-                    >
+                    <StatusBadge status={item.status} size="sm" showShape={false}>
                       {item.value}%
                     </StatusBadge>
                   </div>

@@ -13,7 +13,12 @@ const steps: { id: Step; label: string }[] = [
 ];
 
 const templates = [
-  { id: 'rest-api', name: 'REST API', desc: 'HTTP service with health checks, HPA, and ingress', icon: '🌐' },
+  {
+    id: 'rest-api',
+    name: 'REST API',
+    desc: 'HTTP service with health checks, HPA, and ingress',
+    icon: '🌐',
+  },
   { id: 'worker', name: 'Background Worker', desc: 'Queue consumer with autoscaling', icon: '⚙️' },
   { id: 'grpc', name: 'gRPC Service', desc: 'gRPC service with mTLS', icon: '🔗' },
   { id: 'cron', name: 'CronJob', desc: 'Scheduled batch job', icon: '⏰' },
@@ -54,7 +59,9 @@ export function NewServicePage() {
     <div className="p-6 max-w-3xl mx-auto">
       <div className="mb-8">
         <h1 className="text-xl font-semibold text-[var(--text-primary)]">New Service</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Golden path wizard · generates GitOps PR</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
+          Golden path wizard · generates GitOps PR
+        </p>
       </div>
 
       {/* Step indicator */}
@@ -96,7 +103,9 @@ export function NewServicePage() {
       <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-raised)] p-6">
         {currentStep === 'template' && (
           <div>
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Choose a template</h2>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
+              Choose a template
+            </h2>
             <div className="grid grid-cols-2 gap-3">
               {templates.map((t) => (
                 <button
@@ -121,11 +130,23 @@ export function NewServicePage() {
 
         {currentStep === 'configure' && (
           <div className="space-y-4">
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Configure Your Service</h2>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
+              Configure Your Service
+            </h2>
             {[
-              { label: 'Service Name', key: 'name' as const, placeholder: 'my-service', hint: 'lowercase, alphanumeric, max 63 chars' },
+              {
+                label: 'Service Name',
+                key: 'name' as const,
+                placeholder: 'my-service',
+                hint: 'lowercase, alphanumeric, max 63 chars',
+              },
               { label: 'Namespace', key: 'namespace' as const, placeholder: 'default' },
-              { label: 'Port', key: 'port' as const, placeholder: '8080', hint: 'default for REST API' },
+              {
+                label: 'Port',
+                key: 'port' as const,
+                placeholder: '8080',
+                hint: 'default for REST API',
+              },
               { label: 'Health Check Path', key: 'healthPath' as const, placeholder: '/healthz' },
               { label: 'Owner Team', key: 'owner' as const, placeholder: 'team-platform' },
               { label: 'Slack Channel', key: 'slack' as const, placeholder: '#my-team-oncall' },
@@ -141,12 +162,16 @@ export function NewServicePage() {
                   placeholder={field.placeholder}
                   className="w-full px-3 py-2 rounded-md border border-[var(--border-default)] bg-[var(--surface-base)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--border-focus)]"
                 />
-                {field.hint && <p className="text-[0.625rem] text-[var(--text-muted)] mt-1">{field.hint}</p>}
+                {field.hint && (
+                  <p className="text-[0.625rem] text-[var(--text-muted)] mt-1">{field.hint}</p>
+                )}
               </div>
             ))}
 
             <div>
-              <label className="block text-xs font-medium text-[var(--text-secondary)] mb-2">Service Tier</label>
+              <label className="block text-xs font-medium text-[var(--text-secondary)] mb-2">
+                Service Tier
+              </label>
               <div className="flex gap-3">
                 {(['critical', 'standard', 'best-effort'] as const).map((tier) => (
                   <button
@@ -178,7 +203,9 @@ export function NewServicePage() {
                   <li>Enable liveness + readiness probes</li>
                   <li>Add NetworkPolicy (ingress from gateway only)</li>
                 </ul>
-                <p className="text-[var(--text-muted)]">You can customize these in the next step.</p>
+                <p className="text-[var(--text-muted)]">
+                  You can customize these in the next step.
+                </p>
               </div>
             </div>
           </div>
@@ -186,9 +213,12 @@ export function NewServicePage() {
 
         {currentStep === 'resources' && (
           <div className="space-y-4">
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Resource Configuration</h2>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
+              Resource Configuration
+            </h2>
             <p className="text-xs text-[var(--text-secondary)]">
-              Pre-filled with golden path defaults for a <strong>{config.tier}</strong> {selectedTemplate} service.
+              Pre-filled with golden path defaults for a <strong>{config.tier}</strong>{' '}
+              {selectedTemplate} service.
             </p>
             {[
               { label: 'CPU Request', value: '250m', hint: 'Recommended based on template' },
@@ -200,8 +230,12 @@ export function NewServicePage() {
             ].map((field) => (
               <div key={field.label} className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-medium text-[var(--text-secondary)]">{field.label}</span>
-                  {field.hint && <p className="text-[0.625rem] text-[var(--text-muted)]">{field.hint}</p>}
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">
+                    {field.label}
+                  </span>
+                  {field.hint && (
+                    <p className="text-[0.625rem] text-[var(--text-muted)]">{field.hint}</p>
+                  )}
                 </div>
                 <input
                   type="text"
@@ -215,7 +249,9 @@ export function NewServicePage() {
 
         {currentStep === 'review' && (
           <div className="space-y-4">
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Review & Create</h2>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
+              Review & Create
+            </h2>
             <div className="space-y-2 text-xs">
               {[
                 ['Template', templates.find((t) => t.id === selectedTemplate)?.name || ''],
@@ -226,7 +262,10 @@ export function NewServicePage() {
                 ['Owner', config.owner],
                 ['Tier', config.tier],
               ].map(([label, value]) => (
-                <div key={label} className="flex justify-between py-1.5 border-b border-[var(--border-default)]">
+                <div
+                  key={label}
+                  className="flex justify-between py-1.5 border-b border-[var(--border-default)]"
+                >
                   <span className="text-[var(--text-secondary)]">{label}</span>
                   <span className="text-[var(--text-primary)] font-medium">{value}</span>
                 </div>
@@ -234,8 +273,10 @@ export function NewServicePage() {
             </div>
             <div className="rounded-lg bg-[var(--surface-base)] border border-[var(--border-default)] p-3">
               <p className="text-xs text-[var(--text-secondary)]">
-                This will create a <strong className="text-[var(--text-primary)]">Pull Request</strong> in your GitOps
-                repository with the Deployment, Service, Ingress, HPA, PDB, and NetworkPolicy manifests.
+                This will create a{' '}
+                <strong className="text-[var(--text-primary)]">Pull Request</strong> in your GitOps
+                repository with the Deployment, Service, Ingress, HPA, PDB, and NetworkPolicy
+                manifests.
               </p>
             </div>
           </div>

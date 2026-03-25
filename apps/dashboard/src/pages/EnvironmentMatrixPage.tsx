@@ -1,4 +1,4 @@
-import { HealthDot, StatusBadge, cn, type K8sStatus } from '@kubedash/ui';
+import { cn, HealthDot, type K8sStatus, StatusBadge } from '@kubedash/ui';
 import { ArrowRight, GitPullRequest } from 'lucide-react';
 import { useToast } from '../components/Toast';
 
@@ -67,7 +67,15 @@ const mockMatrix: ServiceEnvRow[] = [
   },
 ];
 
-function EnvCell({ env, nextEnv, serviceName }: { env: EnvVersion; nextEnv?: EnvVersion; serviceName: string }) {
+function EnvCell({
+  env,
+  nextEnv,
+  serviceName,
+}: {
+  env: EnvVersion;
+  nextEnv?: EnvVersion;
+  serviceName: string;
+}) {
   const { toast } = useToast();
   const canPromote = nextEnv && env.version !== nextEnv.version;
 
@@ -80,7 +88,9 @@ function EnvCell({ env, nextEnv, serviceName }: { env: EnvVersion; nextEnv?: Env
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[0.625rem] text-[var(--text-muted)]">{env.deployedAgo} ago</span>
-          <span className="text-[0.625rem] font-mono text-[var(--text-muted)]">{env.commitSha}</span>
+          <span className="text-[0.625rem] font-mono text-[var(--text-muted)]">
+            {env.commitSha}
+          </span>
         </div>
       </div>
     </td>
@@ -146,7 +156,8 @@ export function EnvironmentMatrixPage() {
           </thead>
           <tbody>
             {mockMatrix.map((row) => {
-              const stagingDiffers = row.environments.staging.version !== row.environments.prod.version;
+              const stagingDiffers =
+                row.environments.staging.version !== row.environments.prod.version;
               const devDiffers = row.environments.dev.version !== row.environments.staging.version;
               return (
                 <tr
@@ -160,7 +171,11 @@ export function EnvironmentMatrixPage() {
                   </td>
 
                   {/* Dev */}
-                  <EnvCell env={row.environments.dev} nextEnv={row.environments.staging} serviceName={row.name} />
+                  <EnvCell
+                    env={row.environments.dev}
+                    nextEnv={row.environments.staging}
+                    serviceName={row.name}
+                  />
 
                   {/* Dev → Staging promote */}
                   <td className="text-center">
@@ -181,7 +196,11 @@ export function EnvironmentMatrixPage() {
                   </td>
 
                   {/* Staging */}
-                  <EnvCell env={row.environments.staging} nextEnv={row.environments.prod} serviceName={row.name} />
+                  <EnvCell
+                    env={row.environments.staging}
+                    nextEnv={row.environments.prod}
+                    serviceName={row.name}
+                  />
 
                   {/* Staging → Prod promote */}
                   <td className="text-center">
@@ -189,7 +208,12 @@ export function EnvironmentMatrixPage() {
                       <button
                         type="button"
                         onClick={() =>
-                          handlePromote(row.name, 'staging', 'prod', row.environments.staging.version)
+                          handlePromote(
+                            row.name,
+                            'staging',
+                            'prod',
+                            row.environments.staging.version,
+                          )
                         }
                         className="p-1 rounded-md text-[var(--interactive-primary)] hover:bg-[var(--interactive-primary)]/10 transition-colors"
                         title={`Promote ${row.environments.staging.version} to production`}

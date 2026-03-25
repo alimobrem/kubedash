@@ -1,5 +1,5 @@
-import type { ServiceCardData } from './components/ServiceCard';
 import type { K8sStatus } from '@kubedash/ui';
+import type { ServiceCardData } from './components/ServiceCard';
 
 function sparkline(base: number, variance: number, points = 12): number[] {
   return Array.from({ length: points }, () =>

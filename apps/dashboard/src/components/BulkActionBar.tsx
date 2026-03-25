@@ -1,5 +1,5 @@
 import { cn } from '@kubedash/ui';
-import { ShieldOff, Trash2, Tag, X } from 'lucide-react';
+import { ShieldOff, Tag, Trash2, X } from 'lucide-react';
 
 interface BulkActionBarProps {
   count: number;
@@ -34,7 +34,8 @@ export function BulkActionBar({
       )}
     >
       <span className="text-sm font-semibold text-[var(--text-primary)]">
-        {count} {resourceKind}{count > 1 ? 's' : ''} selected
+        {count} {resourceKind}
+        {count > 1 ? 's' : ''} selected
       </span>
 
       <div className="w-px h-5 bg-[var(--border-default)]" />

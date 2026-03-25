@@ -7,14 +7,17 @@ import {
   Moon,
   Rows2,
   Search,
+  Sparkles,
   Sun,
 } from 'lucide-react';
 import { useClusterStore } from '../stores/cluster';
 import { useLayoutStore } from '../stores/layout';
+import { usePulseStore } from '../stores/pulse';
 
 export function GlobalBar() {
   const { theme, toggleTheme, density, setDensity } = useLayoutStore();
   const { activeCluster, clusters, activeNamespace } = useClusterStore();
+  const { togglePanel, panelOpen } = usePulseStore();
 
   const currentCluster = clusters.find((c) => c.name === activeCluster);
 
@@ -79,6 +82,20 @@ export function GlobalBar() {
 
       {/* Spacer */}
       <div className="flex-1" />
+
+      {/* Pulse AI Indicator */}
+      <button
+        type="button"
+        onClick={togglePanel}
+        className={cn(
+          'p-1.5 rounded-md hover:bg-[var(--surface-overlay)] transition-colors relative',
+          panelOpen ? 'text-[var(--pulse-accent)]' : 'text-[var(--text-secondary)]',
+        )}
+        title="Pulse AI (⌘J)"
+      >
+        <Sparkles size={16} />
+        <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-[var(--pulse-accent)] shadow-[0_0_6px_var(--pulse-glow)]" />
+      </button>
 
       {/* Density Toggle */}
       <button

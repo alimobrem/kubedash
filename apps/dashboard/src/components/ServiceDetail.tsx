@@ -2,13 +2,13 @@ import {
   ConditionList,
   CostBadge,
   HealthDot,
+  type K8sCondition,
   Label,
   MetricValue,
   ProgressRing,
   RelativeTime,
   ScoreCard,
   StatusBadge,
-  type K8sCondition,
 } from '@kubedash/ui';
 import { Play, RotateCcw, Scaling } from 'lucide-react';
 import { useState } from 'react';
@@ -23,14 +23,48 @@ interface ServiceDetailProps {
 }
 
 const mockPods = [
-  { name: 'payment-api-7f8b9c', status: 'Running' as const, restarts: 0, age: '2d', cpu: 35, memory: 62, containers: '1/1' },
-  { name: 'payment-api-a3d4e1', status: 'Running' as const, restarts: 0, age: '2d', cpu: 42, memory: 71, containers: '1/1' },
-  { name: 'payment-api-c9e2f4', status: 'Running' as const, restarts: 2, age: '4h', cpu: 55, memory: 68, containers: '1/1' },
+  {
+    name: 'payment-api-7f8b9c',
+    status: 'Running' as const,
+    restarts: 0,
+    age: '2d',
+    cpu: 35,
+    memory: 62,
+    containers: '1/1',
+  },
+  {
+    name: 'payment-api-a3d4e1',
+    status: 'Running' as const,
+    restarts: 0,
+    age: '2d',
+    cpu: 42,
+    memory: 71,
+    containers: '1/1',
+  },
+  {
+    name: 'payment-api-c9e2f4',
+    status: 'Running' as const,
+    restarts: 2,
+    age: '4h',
+    cpu: 55,
+    memory: 68,
+    containers: '1/1',
+  },
 ];
 
 const mockConditions: K8sCondition[] = [
-  { type: 'Available', status: 'True', reason: 'MinimumReplicasAvailable', lastTransitionTime: '2026-03-15T10:30:00Z' },
-  { type: 'Progressing', status: 'True', reason: 'NewReplicaSetAvailable', lastTransitionTime: '2026-03-15T10:30:00Z' },
+  {
+    type: 'Available',
+    status: 'True',
+    reason: 'MinimumReplicasAvailable',
+    lastTransitionTime: '2026-03-15T10:30:00Z',
+  },
+  {
+    type: 'Progressing',
+    status: 'True',
+    reason: 'NewReplicaSetAvailable',
+    lastTransitionTime: '2026-03-15T10:30:00Z',
+  },
 ];
 
 const mockEnvironments = [
@@ -40,7 +74,9 @@ const mockEnvironments = [
 ];
 
 export function ServiceDetail({ service }: ServiceDetailProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'pods' | 'events' | 'metrics'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'pods' | 'events' | 'metrics'>(
+    'overview',
+  );
   const [scaleOpen, setScaleOpen] = useState(false);
   const [rollbackOpen, setRollbackOpen] = useState(false);
   const { toast } = useToast();
@@ -54,6 +90,9 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
 
   return (
     <div className="space-y-4">
+      {/* Pulse Insight (always visible) */}
+      <ExplainButton service={service} />
+
       {/* Action buttons */}
       <div className="flex gap-2 flex-wrap">
         <button
@@ -65,7 +104,9 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
         </button>
         <button
           type="button"
-          onClick={() => toast(`Rolling restart initiated for ${service.name}`, { variant: 'success' })}
+          onClick={() =>
+            toast(`Rolling restart initiated for ${service.name}`, { variant: 'success' })
+          }
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-[var(--border-default)] text-[var(--text-primary)] hover:bg-[var(--surface-overlay)] transition-colors"
         >
           <RotateCcw size={14} /> Restart
@@ -77,7 +118,6 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
         >
           <Play size={14} /> Rollback
         </button>
-        <ExplainButton service={service} />
       </div>
 
       {/* Dialogs */}
@@ -121,7 +161,11 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
             </h3>
             <div className="space-y-1.5">
               {[
-                { kind: 'Deployment', name: service.name, detail: `${service.replicas.ready}/${service.replicas.desired} ready` },
+                {
+                  kind: 'Deployment',
+                  name: service.name,
+                  detail: `${service.replicas.ready}/${service.replicas.desired} ready`,
+                },
                 { kind: 'Service', name: service.name, detail: 'ClusterIP' },
                 { kind: 'Ingress', name: service.name, detail: `api.acme.com/${service.name}` },
                 { kind: 'HPA', name: service.name, detail: '3-10 replicas' },
@@ -212,29 +256,64 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
           <table className="w-full">
             <thead>
               <tr className="border-b border-[var(--border-default)] bg-[var(--surface-overlay)]/50">
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Name</th>
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Status</th>
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Restarts</th>
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">CPU</th>
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Mem</th>
-                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Age</th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  Name
+                </th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  Status
+                </th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  Restarts
+                </th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  CPU
+                </th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  Mem
+                </th>
+                <th className="text-left px-3 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                  Age
+                </th>
               </tr>
             </thead>
             <tbody>
               {mockPods.map((pod) => (
-                <tr key={pod.name} className="border-b border-[var(--border-default)] last:border-b-0 hover:bg-[var(--surface-overlay)] transition-colors cursor-pointer">
-                  <td className="px-3 py-2 text-xs font-mono text-[var(--text-primary)]">{pod.name}</td>
-                  <td className="px-3 py-2">
-                    <StatusBadge status="running" size="sm">{pod.status}</StatusBadge>
-                  </td>
-                  <td className="px-3 py-2 text-xs tabular-nums text-[var(--text-secondary)]">{pod.restarts}</td>
-                  <td className="px-3 py-2">
-                    <ProgressRing value={pod.cpu} size={28} strokeWidth={3} autoColor showLabel={false} />
+                <tr
+                  key={pod.name}
+                  className="border-b border-[var(--border-default)] last:border-b-0 hover:bg-[var(--surface-overlay)] transition-colors cursor-pointer"
+                >
+                  <td className="px-3 py-2 text-xs font-mono text-[var(--text-primary)]">
+                    {pod.name}
                   </td>
                   <td className="px-3 py-2">
-                    <ProgressRing value={pod.memory} size={28} strokeWidth={3} autoColor showLabel={false} />
+                    <StatusBadge status="running" size="sm">
+                      {pod.status}
+                    </StatusBadge>
                   </td>
-                  <td className="px-3 py-2 text-xs text-[var(--text-muted)] tabular-nums">{pod.age}</td>
+                  <td className="px-3 py-2 text-xs tabular-nums text-[var(--text-secondary)]">
+                    {pod.restarts}
+                  </td>
+                  <td className="px-3 py-2">
+                    <ProgressRing
+                      value={pod.cpu}
+                      size={28}
+                      strokeWidth={3}
+                      autoColor
+                      showLabel={false}
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <ProgressRing
+                      value={pod.memory}
+                      size={28}
+                      strokeWidth={3}
+                      autoColor
+                      showLabel={false}
+                    />
+                  </td>
+                  <td className="px-3 py-2 text-xs text-[var(--text-muted)] tabular-nums">
+                    {pod.age}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -243,20 +322,34 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
       )}
 
       {activeTab === 'events' && (
-        <div className="text-sm text-[var(--text-muted)] py-8 text-center">
-          No recent events
-        </div>
+        <div className="text-sm text-[var(--text-muted)] py-8 text-center">No recent events</div>
       )}
 
       {activeTab === 'metrics' && (
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg border border-[var(--border-default)] bg-[var(--surface-base)] p-4">
-            <MetricValue label="CPU Usage" value={service.cpu.current} unit="%" color="cpu" size="md" />
-            <div className="mt-2 text-[0.625rem] text-[var(--text-muted)]">Request: 500m · Limit: 1000m</div>
+            <MetricValue
+              label="CPU Usage"
+              value={service.cpu.current}
+              unit="%"
+              color="cpu"
+              size="md"
+            />
+            <div className="mt-2 text-[0.625rem] text-[var(--text-muted)]">
+              Request: 500m · Limit: 1000m
+            </div>
           </div>
           <div className="rounded-lg border border-[var(--border-default)] bg-[var(--surface-base)] p-4">
-            <MetricValue label="Memory Usage" value={service.memory.current} unit="%" color="memory" size="md" />
-            <div className="mt-2 text-[0.625rem] text-[var(--text-muted)]">Request: 256Mi · Limit: 512Mi</div>
+            <MetricValue
+              label="Memory Usage"
+              value={service.memory.current}
+              unit="%"
+              color="memory"
+              size="md"
+            />
+            <div className="mt-2 text-[0.625rem] text-[var(--text-muted)]">
+              Request: 256Mi · Limit: 512Mi
+            </div>
           </div>
         </div>
       )}

@@ -1,12 +1,12 @@
 import {
   CostBadge,
+  cn,
   HealthDot,
+  type K8sStatus,
   RelativeTime,
   ScoreCard,
   Sparkline,
   StatusBadge,
-  cn,
-  type K8sStatus,
 } from '@kubedash/ui';
 
 export interface ServiceCardData {
@@ -30,8 +30,10 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service, onClick, className }: ServiceCardProps) {
-  const isHealthy = service.status === 'running' && service.replicas.ready === service.replicas.desired;
-  const isDegraded = service.status === 'running' && service.replicas.ready < service.replicas.desired;
+  const isHealthy =
+    service.status === 'running' && service.replicas.ready === service.replicas.desired;
+  const isDegraded =
+    service.status === 'running' && service.replicas.ready < service.replicas.desired;
 
   return (
     <button

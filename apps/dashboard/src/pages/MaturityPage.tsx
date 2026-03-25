@@ -1,4 +1,4 @@
-import { ScoreCard, cn } from '@kubedash/ui';
+import { cn, ScoreCard } from '@kubedash/ui';
 import { ChevronDown, ChevronRight, FileDown, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 
@@ -19,8 +19,17 @@ interface ServiceScore {
 
 const mockScores: ServiceScore[] = [
   {
-    name: 'order-processor', team: 'payments', tier: 'critical', score: 9, total: 10,
-    categories: { reliability: { score: 5, total: 5 }, observability: { score: 4, total: 5 }, security: { score: 5, total: 5 }, operations: { score: 4, total: 5 } },
+    name: 'order-processor',
+    team: 'payments',
+    tier: 'critical',
+    score: 9,
+    total: 10,
+    categories: {
+      reliability: { score: 5, total: 5 },
+      observability: { score: 4, total: 5 },
+      security: { score: 5, total: 5 },
+      operations: { score: 4, total: 5 },
+    },
     items: [
       { name: 'Resource limits', passed: true, category: 'reliability' },
       { name: 'Health checks', passed: true, category: 'reliability' },
@@ -35,8 +44,17 @@ const mockScores: ServiceScore[] = [
     ],
   },
   {
-    name: 'payment-api', team: 'payments', tier: 'critical', score: 8, total: 10,
-    categories: { reliability: { score: 5, total: 5 }, observability: { score: 3, total: 5 }, security: { score: 4, total: 5 }, operations: { score: 4, total: 5 } },
+    name: 'payment-api',
+    team: 'payments',
+    tier: 'critical',
+    score: 8,
+    total: 10,
+    categories: {
+      reliability: { score: 5, total: 5 },
+      observability: { score: 3, total: 5 },
+      security: { score: 4, total: 5 },
+      operations: { score: 4, total: 5 },
+    },
     items: [
       { name: 'Resource limits', passed: true, category: 'reliability' },
       { name: 'Health checks', passed: true, category: 'reliability' },
@@ -45,8 +63,17 @@ const mockScores: ServiceScore[] = [
     ],
   },
   {
-    name: 'user-service', team: 'identity', tier: 'standard', score: 7, total: 10,
-    categories: { reliability: { score: 4, total: 5 }, observability: { score: 3, total: 5 }, security: { score: 4, total: 5 }, operations: { score: 3, total: 5 } },
+    name: 'user-service',
+    team: 'identity',
+    tier: 'standard',
+    score: 7,
+    total: 10,
+    categories: {
+      reliability: { score: 4, total: 5 },
+      observability: { score: 3, total: 5 },
+      security: { score: 4, total: 5 },
+      operations: { score: 3, total: 5 },
+    },
     items: [
       { name: 'PDB configured', passed: false, category: 'reliability' },
       { name: 'SLO defined', passed: false, category: 'observability' },
@@ -54,8 +81,17 @@ const mockScores: ServiceScore[] = [
     ],
   },
   {
-    name: 'checkout-svc', team: 'payments', tier: 'critical', score: 4, total: 10,
-    categories: { reliability: { score: 1, total: 5 }, observability: { score: 1, total: 5 }, security: { score: 2, total: 5 }, operations: { score: 1, total: 5 } },
+    name: 'checkout-svc',
+    team: 'payments',
+    tier: 'critical',
+    score: 4,
+    total: 10,
+    categories: {
+      reliability: { score: 1, total: 5 },
+      observability: { score: 1, total: 5 },
+      security: { score: 2, total: 5 },
+      operations: { score: 1, total: 5 },
+    },
     items: [
       { name: 'Health checks', passed: false, category: 'reliability' },
       { name: 'HPA configured', passed: false, category: 'reliability' },
@@ -66,8 +102,17 @@ const mockScores: ServiceScore[] = [
     ],
   },
   {
-    name: 'analytics-worker', team: 'data', tier: 'best-effort', score: 3, total: 10,
-    categories: { reliability: { score: 1, total: 5 }, observability: { score: 0, total: 5 }, security: { score: 1, total: 5 }, operations: { score: 1, total: 5 } },
+    name: 'analytics-worker',
+    team: 'data',
+    tier: 'best-effort',
+    score: 3,
+    total: 10,
+    categories: {
+      reliability: { score: 1, total: 5 },
+      observability: { score: 0, total: 5 },
+      security: { score: 1, total: 5 },
+      operations: { score: 1, total: 5 },
+    },
     items: [
       { name: 'Resource limits', passed: true, category: 'reliability' },
       { name: 'Everything else', passed: false, category: 'reliability' },
@@ -77,10 +122,29 @@ const mockScores: ServiceScore[] = [
 
 function ScoreLevel({ score, total }: { score: number; total: number }) {
   const ratio = score / total;
-  if (ratio >= 0.8) return <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-running-bg)] text-[var(--status-running)]">Gold</span>;
-  if (ratio >= 0.6) return <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--interactive-primary)]/10 text-[var(--interactive-primary)]">Silver</span>;
-  if (ratio >= 0.4) return <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-pending-bg)] text-[var(--status-pending)]">Bronze</span>;
-  return <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-failed-bg)] text-[var(--status-failed)]">Needs Work</span>;
+  if (ratio >= 0.8)
+    return (
+      <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-running-bg)] text-[var(--status-running)]">
+        Gold
+      </span>
+    );
+  if (ratio >= 0.6)
+    return (
+      <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--interactive-primary)]/10 text-[var(--interactive-primary)]">
+        Silver
+      </span>
+    );
+  if (ratio >= 0.4)
+    return (
+      <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-pending-bg)] text-[var(--status-pending)]">
+        Bronze
+      </span>
+    );
+  return (
+    <span className="text-[0.625rem] font-semibold px-1.5 py-0.5 rounded bg-[var(--status-failed-bg)] text-[var(--status-failed)]">
+      Needs Work
+    </span>
+  );
 }
 
 export function MaturityPage() {
@@ -94,7 +158,9 @@ export function MaturityPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-[var(--text-primary)]">Service Maturity</h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">Scorecards across {mockScores.length} services</p>
+          <p className="text-sm text-[var(--text-secondary)] mt-1">
+            Scorecards across {mockScores.length} services
+          </p>
         </div>
         <button
           type="button"
@@ -107,7 +173,9 @@ export function MaturityPage() {
       {/* Summary */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="rounded-lg border border-[var(--border-default)] bg-[var(--surface-raised)] p-4 text-center">
-          <div className="text-2xl font-bold text-[var(--text-primary)]">{avgScore.toFixed(1)}/10</div>
+          <div className="text-2xl font-bold text-[var(--text-primary)]">
+            {avgScore.toFixed(1)}/10
+          </div>
           <div className="text-xs text-[var(--text-muted)] mt-1">Average Score</div>
         </div>
         <div className="rounded-lg border border-[var(--border-default)] bg-[var(--surface-raised)] p-4 text-center">
@@ -129,7 +197,11 @@ export function MaturityPage() {
               onClick={() => setExpanded(expanded === s.name ? null : s.name)}
               className="w-full flex items-center gap-4 px-4 py-3 hover:bg-[var(--surface-overlay)] transition-colors text-left"
             >
-              {expanded === s.name ? <ChevronDown size={14} className="text-[var(--text-muted)]" /> : <ChevronRight size={14} className="text-[var(--text-muted)]" />}
+              {expanded === s.name ? (
+                <ChevronDown size={14} className="text-[var(--text-muted)]" />
+              ) : (
+                <ChevronRight size={14} className="text-[var(--text-muted)]" />
+              )}
               <span className="text-sm font-medium text-[var(--text-primary)] w-40">{s.name}</span>
               <span className="text-xs text-[var(--text-muted)] w-24">{s.team}</span>
               <ScoreLevel score={s.score} total={s.total} />
@@ -148,20 +220,25 @@ export function MaturityPage() {
                   ))}
                 </div>
                 <div className="space-y-1">
-                  {s.items.filter((i) => !i.passed).map((item) => (
-                    <div key={item.name} className="flex items-center justify-between text-xs py-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[var(--status-failed)]">✗</span>
-                        <span className="text-[var(--text-primary)]">{item.name}</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="text-[var(--text-link)] hover:underline text-[0.625rem]"
+                  {s.items
+                    .filter((i) => !i.passed)
+                    .map((item) => (
+                      <div
+                        key={item.name}
+                        className="flex items-center justify-between text-xs py-1"
                       >
-                        Fix this →
-                      </button>
-                    </div>
-                  ))}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[var(--status-failed)]">✗</span>
+                          <span className="text-[var(--text-primary)]">{item.name}</span>
+                        </div>
+                        <button
+                          type="button"
+                          className="text-[var(--text-link)] hover:underline text-[0.625rem]"
+                        >
+                          Fix this →
+                        </button>
+                      </div>
+                    ))}
                 </div>
               </div>
             )}

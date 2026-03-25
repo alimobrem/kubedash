@@ -1,9 +1,4 @@
-import {
-  createRootRoute,
-  createRoute,
-  createRouter,
-  Outlet,
-} from '@tanstack/react-router';
+import { createRootRoute, createRoute, createRouter, Outlet } from '@tanstack/react-router';
 import { AppShell } from './components/AppShell';
 import { ToastProvider } from './components/Toast';
 import { CostPage } from './pages/CostPage';
@@ -42,17 +37,53 @@ const routes = [
   createRoute({ getParentRoute: () => rootRoute, path: '/triage', component: TriagePage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/nodes', component: NodesPage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/cost', component: CostPage }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/deploy', component: EnvironmentMatrixPage }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/deploy',
+    component: EnvironmentMatrixPage,
+  }),
   createRoute({ getParentRoute: () => rootRoute, path: '/new-service', component: NewServicePage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/maturity', component: MaturityPage }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/overview', component: placeholder('Cluster Overview') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/services', component: placeholder('All Services') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/topology', component: placeholder('Topology') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/networking', component: placeholder('Networking') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/storage', component: placeholder('Storage') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/configuration', component: placeholder('Configuration') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/security', component: placeholder('Security') }),
-  createRoute({ getParentRoute: () => rootRoute, path: '/reliability', component: placeholder('Reliability & SLOs') }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/overview',
+    component: placeholder('Cluster Overview'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/services',
+    component: placeholder('All Services'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/topology',
+    component: placeholder('Topology'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/networking',
+    component: placeholder('Networking'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/storage',
+    component: placeholder('Storage'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/configuration',
+    component: placeholder('Configuration'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/security',
+    component: placeholder('Security'),
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/reliability',
+    component: placeholder('Reliability & SLOs'),
+  }),
   createRoute({ getParentRoute: () => rootRoute, path: '/logs', component: placeholder('Logs') }),
 ];
 

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ScoreCard } from '@kubedash/ui';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ScoreCard> = {
   title: 'Primitives/ScoreCard',

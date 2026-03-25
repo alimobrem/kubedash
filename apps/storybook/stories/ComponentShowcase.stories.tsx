@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import {
   Avatar,
   BreadcrumbTrail,
@@ -15,6 +14,7 @@ import {
   Sparkline,
   Truncate,
 } from '@kubedash/ui';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Inbox } from 'lucide-react';
 
 const meta: Meta = {
@@ -29,7 +29,9 @@ export const AllPrimitives: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 640 }}>
       {/* Avatars */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>Avatar</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          Avatar
+        </h3>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <Avatar name="Alice Chen" size="sm" />
           <Avatar name="Platform Team" size="md" />
@@ -39,7 +41,9 @@ export const AllPrimitives: Story = {
 
       {/* Resource Icons */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>ResourceIcon</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          ResourceIcon
+        </h3>
         <div style={{ display: 'flex', gap: 12, color: 'var(--text-primary)' }}>
           <ResourceIcon kind="pod" size={20} />
           <ResourceIcon kind="deployment" size={20} />
@@ -54,7 +58,9 @@ export const AllPrimitives: Story = {
 
       {/* Labels */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>Label</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          Label
+        </h3>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           <Label name="app" value="payment-api" />
           <Label name="version" value="v2.14.3" />
@@ -65,7 +71,9 @@ export const AllPrimitives: Story = {
 
       {/* Filter Chips */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>FilterChip</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          FilterChip
+        </h3>
         <div style={{ display: 'flex', gap: 6 }}>
           <FilterChip label="namespace" value="payments" onRemove={() => {}} />
           <FilterChip label="status" value="Running" onRemove={() => {}} />
@@ -74,15 +82,28 @@ export const AllPrimitives: Story = {
 
       {/* KBD */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>KBD</h3>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-          <span>Press</span> <KBD>⌘</KBD><KBD>K</KBD> <span>to search</span>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          KBD
+        </h3>
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            alignItems: 'center',
+            color: 'var(--text-secondary)',
+            fontSize: '0.8rem',
+          }}
+        >
+          <span>Press</span> <KBD>⌘</KBD>
+          <KBD>K</KBD> <span>to search</span>
         </div>
       </section>
 
       {/* ResourceValue */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>ResourceValue</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          ResourceValue
+        </h3>
         <div style={{ display: 'flex', gap: 16 }}>
           <ResourceValue value="250m" type="cpu" />
           <ResourceValue value="512Mi" type="memory" />
@@ -93,32 +114,49 @@ export const AllPrimitives: Story = {
 
       {/* Sparkline */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>Sparkline</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          Sparkline
+        </h3>
         <div style={{ display: 'flex', gap: 16 }}>
-          <Sparkline data={[20, 35, 42, 38, 45, 52, 48, 55, 60, 58, 62, 65]} color="cpu" showRange />
-          <Sparkline data={[60, 62, 58, 65, 70, 85, 92, 88, 80, 75, 72, 68]} color="memory" filled showRange />
+          <Sparkline
+            data={[20, 35, 42, 38, 45, 52, 48, 55, 60, 58, 62, 65]}
+            color="cpu"
+            showRange
+          />
+          <Sparkline
+            data={[60, 62, 58, 65, 70, 85, 92, 88, 80, 75, 72, 68]}
+            color="memory"
+            filled
+            showRange
+          />
         </div>
       </section>
 
       {/* CostBadge */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>CostBadge</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          CostBadge
+        </h3>
         <div style={{ display: 'flex', gap: 16 }}>
-          <CostBadge monthlyCost={142.30} trend="up" trendPercent={12} />
+          <CostBadge monthlyCost={142.3} trend="up" trendPercent={12} />
           <CostBadge monthlyCost={2400} trend="down" trendPercent={8} />
-          <CostBadge monthlyCost={89.50} />
+          <CostBadge monthlyCost={89.5} />
         </div>
       </section>
 
       {/* RelativeTime */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>RelativeTime</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          RelativeTime
+        </h3>
         <RelativeTime timestamp={new Date(Date.now() - 180000).toISOString()} />
       </section>
 
       {/* Truncate */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>Truncate</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          Truncate
+        </h3>
         <div style={{ color: 'var(--text-primary)', fontSize: '0.8rem' }}>
           <Truncate>payment-api-deployment-7f8b9c6d4a-x2k9p</Truncate>
         </div>
@@ -126,7 +164,9 @@ export const AllPrimitives: Story = {
 
       {/* BreadcrumbTrail */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>BreadcrumbTrail</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          BreadcrumbTrail
+        </h3>
         <BreadcrumbTrail
           items={[
             { label: 'prod-us-east-1', href: '/clusters/prod' },
@@ -140,7 +180,9 @@ export const AllPrimitives: Story = {
 
       {/* Skeleton */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>Skeleton</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          Skeleton
+        </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 200 }}>
           <Skeleton width="full" height="md" />
           <Skeleton width="lg" height="sm" />
@@ -150,7 +192,9 @@ export const AllPrimitives: Story = {
 
       {/* CodeBlock */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>CodeBlock</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          CodeBlock
+        </h3>
         <CodeBlock language="yaml">{`apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -165,7 +209,9 @@ spec:
 
       {/* EmptyState */}
       <section>
-        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>EmptyState</h3>
+        <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: 8 }}>
+          EmptyState
+        </h3>
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 8 }}>
           <EmptyState
             icon={<Inbox />}

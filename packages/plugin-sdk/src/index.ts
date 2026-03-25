@@ -1,13 +1,4 @@
-export {
-  DashboardConfig,
-} from './dashboard-config';
-
-export {
-  K8sResourceRef,
-  PlatformType,
-  ScorecardCheck,
-} from './platform-object-model';
-
+export { DashboardConfig } from './dashboard-config';
 export type {
   ActionExtension,
   DetailTabExtension,
@@ -19,3 +10,8 @@ export type {
   SidebarItemExtension,
   TableColumnExtension,
 } from './extension-points';
+export {
+  K8sResourceRef,
+  PlatformType,
+  ScorecardCheck,
+} from './platform-object-model';

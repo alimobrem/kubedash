@@ -95,6 +95,12 @@
   --chart-11: oklch(0.600 0.190 280);
   --chart-12: oklch(0.750 0.130 50);
 
+  /* ── Pulse AI ── */
+  --pulse-accent: oklch(0.750 0.180 280);
+  --pulse-accent-bg: oklch(0.750 0.180 280 / var(--alpha-subtle));
+  --pulse-glow: oklch(0.750 0.180 280 / 0.3);
+  --pulse-border: oklch(0.750 0.180 280 / 0.25);
+
   /* ── Density ── */
   --density-factor: 1;
 }
@@ -153,6 +159,12 @@
   --glow-danger: oklch(0.577 0.245 25 / 0.2);
   --glow-warning: oklch(0.666 0.179 70 / 0.2);
   --glow-info: oklch(0.546 0.245 266 / 0.2);
+
+  /* ── Pulse AI ── */
+  --pulse-accent: oklch(0.550 0.200 280);
+  --pulse-accent-bg: oklch(0.550 0.200 280 / var(--alpha-subtle));
+  --pulse-glow: oklch(0.550 0.200 280 / 0.15);
+  --pulse-border: oklch(0.550 0.200 280 / 0.15);
 
   /* ── Tooltip text (light on dark) ── */
   --text-tooltip: oklch(0.93 0 0);

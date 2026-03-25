@@ -1,5 +1,8 @@
-import { MetricValue, cn, formatPercent } from '@kubedash/ui';
+import { cn, formatPercent, MetricValue } from '@kubedash/ui';
 import { ArrowDown, ArrowUp, DollarSign, FileDown, Lightbulb, TrendingUp, Zap } from 'lucide-react';
+import { PulseInsightCard } from '../components/PulseInsightCard';
+import { PulseText } from '../components/PulseText';
+import { generateCostInsight } from '../utils/pulse-templates';
 
 interface TeamCost {
   team: string;
@@ -28,11 +31,46 @@ const teamCosts: TeamCost[] = [
 ];
 
 const serviceCosts: ServiceCost[] = [
-  { name: 'order-processor', team: 'payments', monthly: 2800, cpuReq: '8 cores', cpuUsed: '3.2 cores', efficiency: 40 },
-  { name: 'ml-pipeline', team: 'ml-team', monthly: 2050, cpuReq: '16 cores', cpuUsed: '12 cores', efficiency: 75 },
-  { name: 'payment-worker', team: 'payments', monthly: 1900, cpuReq: '4 cores', cpuUsed: '0.5 cores', efficiency: 12 },
-  { name: 'user-db', team: 'identity', monthly: 1700, cpuReq: '2 cores', cpuUsed: '1.8 cores', efficiency: 90 },
-  { name: 'api-gateway', team: 'platform', monthly: 1500, cpuReq: '4 cores', cpuUsed: '2.1 cores', efficiency: 53 },
+  {
+    name: 'order-processor',
+    team: 'payments',
+    monthly: 2800,
+    cpuReq: '8 cores',
+    cpuUsed: '3.2 cores',
+    efficiency: 40,
+  },
+  {
+    name: 'ml-pipeline',
+    team: 'ml-team',
+    monthly: 2050,
+    cpuReq: '16 cores',
+    cpuUsed: '12 cores',
+    efficiency: 75,
+  },
+  {
+    name: 'payment-worker',
+    team: 'payments',
+    monthly: 1900,
+    cpuReq: '4 cores',
+    cpuUsed: '0.5 cores',
+    efficiency: 12,
+  },
+  {
+    name: 'user-db',
+    team: 'identity',
+    monthly: 1700,
+    cpuReq: '2 cores',
+    cpuUsed: '1.8 cores',
+    efficiency: 90,
+  },
+  {
+    name: 'api-gateway',
+    team: 'platform',
+    monthly: 1500,
+    cpuReq: '4 cores',
+    cpuUsed: '2.1 cores',
+    efficiency: 53,
+  },
 ];
 
 const totalSpend = teamCosts.reduce((s, t) => s + t.monthly, 0);
@@ -52,6 +90,23 @@ export function CostPage() {
         >
           <FileDown size={14} /> Export
         </button>
+      </div>
+
+      {/* Pulse Cost Insight */}
+      <div className="mb-6">
+        <PulseInsightCard
+          id="cost-insight"
+          severity="warning"
+          actions={[
+            {
+              label: 'Right-size suggestions',
+              type: 'execute',
+              payload: 'Show right-sizing opportunities',
+            },
+          ]}
+        >
+          <PulseText text={generateCostInsight()} />
+        </PulseInsightCard>
       </div>
 
       {/* Summary cards */}
@@ -84,7 +139,10 @@ export function CostPage() {
           <div className="flex items-center gap-2">
             <div className="text-2xl font-bold text-[var(--text-primary)]">72%</div>
             <div className="flex-1 h-2 bg-[var(--surface-overlay)] rounded-full overflow-hidden">
-              <div className="h-full bg-[var(--status-pending)] rounded-full" style={{ width: '72%' }} />
+              <div
+                className="h-full bg-[var(--status-pending)] rounded-full"
+                style={{ width: '72%' }}
+              />
             </div>
           </div>
           <div className="text-xs text-[var(--text-muted)] mt-1">utilized vs allocated</div>
@@ -127,7 +185,9 @@ export function CostPage() {
                     <span
                       className={cn(
                         'flex items-center gap-0.5 text-[0.625rem] tabular-nums',
-                        t.trend > 0 ? 'text-[var(--status-failed)]' : 'text-[var(--status-running)]',
+                        t.trend > 0
+                          ? 'text-[var(--status-failed)]'
+                          : 'text-[var(--status-running)]',
                       )}
                     >
                       {t.trend > 0 ? <ArrowUp size={10} /> : <ArrowDown size={10} />}
@@ -160,24 +220,45 @@ export function CostPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[var(--border-default)] bg-[var(--surface-overlay)]/50">
-                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Service</th>
-                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Team</th>
-                  <th className="text-right px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Monthly</th>
-                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">CPU Req</th>
-                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">CPU Used</th>
-                  <th className="text-right px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">Efficiency</th>
+                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    Service
+                  </th>
+                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    Team
+                  </th>
+                  <th className="text-right px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    Monthly
+                  </th>
+                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    CPU Req
+                  </th>
+                  <th className="text-left px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    CPU Used
+                  </th>
+                  <th className="text-right px-4 py-2 text-[0.625rem] font-semibold text-[var(--text-secondary)] uppercase">
+                    Efficiency
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {serviceCosts.map((s) => (
-                  <tr key={s.name} className="border-b border-[var(--border-default)] last:border-b-0 hover:bg-[var(--surface-overlay)] transition-colors cursor-pointer">
-                    <td className="px-4 py-2.5 text-xs font-mono text-[var(--text-primary)]">{s.name}</td>
+                  <tr
+                    key={s.name}
+                    className="border-b border-[var(--border-default)] last:border-b-0 hover:bg-[var(--surface-overlay)] transition-colors cursor-pointer"
+                  >
+                    <td className="px-4 py-2.5 text-xs font-mono text-[var(--text-primary)]">
+                      {s.name}
+                    </td>
                     <td className="px-4 py-2.5 text-xs text-[var(--text-secondary)]">{s.team}</td>
                     <td className="px-4 py-2.5 text-xs text-[var(--text-primary)] tabular-nums text-right font-medium">
                       ${s.monthly.toLocaleString()}
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-[var(--text-secondary)] tabular-nums">{s.cpuReq}</td>
-                    <td className="px-4 py-2.5 text-xs text-[var(--text-secondary)] tabular-nums">{s.cpuUsed}</td>
+                    <td className="px-4 py-2.5 text-xs text-[var(--text-secondary)] tabular-nums">
+                      {s.cpuReq}
+                    </td>
+                    <td className="px-4 py-2.5 text-xs text-[var(--text-secondary)] tabular-nums">
+                      {s.cpuUsed}
+                    </td>
                     <td className="px-4 py-2.5 text-right">
                       <span
                         className={cn(
@@ -189,8 +270,7 @@ export function CostPage() {
                               : 'text-[var(--status-failed)]',
                         )}
                       >
-                        {s.efficiency}%
-                        {s.efficiency < 30 && ' ▼▼'}
+                        {s.efficiency}%{s.efficiency < 30 && ' ▼▼'}
                         {s.efficiency >= 30 && s.efficiency < 50 && ' ▼'}
                         {s.efficiency >= 80 && ' ✓'}
                       </span>
@@ -205,7 +285,8 @@ export function CostPage() {
           <div className="mt-3 rounded-lg border border-[var(--status-pending)]/20 bg-[var(--status-pending-bg)] p-3 flex items-start gap-2">
             <Lightbulb size={14} className="text-[var(--status-pending)] flex-shrink-0 mt-0.5" />
             <p className="text-xs text-[var(--text-primary)]">
-              <strong>payment-worker</strong> is using 12% of requested CPU. Right-size to save ~<strong>$1,400/mo</strong>.
+              <strong>payment-worker</strong> is using 12% of requested CPU. Right-size to save ~
+              <strong>$1,400/mo</strong>.
             </p>
           </div>
         </section>

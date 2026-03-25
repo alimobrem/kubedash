@@ -1,6 +1,6 @@
 import { cn } from '@kubedash/ui';
-import { CheckCircle, X, XCircle, AlertTriangle, Info } from 'lucide-react';
-import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
+import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
+import { createContext, type ReactNode, useCallback, useContext, useState } from 'react';
 
 type ToastVariant = 'success' | 'error' | 'warning' | 'info';
 
@@ -13,7 +13,10 @@ interface Toast {
 }
 
 interface ToastContextValue {
-  toast: (message: string, opts?: { variant?: ToastVariant; action?: Toast['action']; duration?: number }) => void;
+  toast: (
+    message: string,
+    opts?: { variant?: ToastVariant; action?: Toast['action']; duration?: number },
+  ) => void;
 }
 
 const ToastContext = createContext<ToastContextValue>({ toast: () => {} });
